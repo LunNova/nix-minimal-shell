@@ -11,6 +11,8 @@ direnv: export ~PATH ~XDG_DATA_DIRS
 
 ## Usage
 
+Use something like this. For non-flake users you can fetch this repo and `import ${fetch...}/minimal-shell.nix` to get the same function.
+
 ```nix
 {
     devShell.${system} = flakeArgs.minimal-shell.lib.minimal-shell {
@@ -23,3 +25,5 @@ direnv: export ~PATH ~XDG_DATA_DIRS
     };
 }
 ```
+
+[Here's an example usage in my nixos-configs flake.](https://github.com/LunNova/nixos-configs/blob/d6c22273f42f6f5abb56a7b56cfeb1c0438f9b51/per-system.nix#L70-L74)
