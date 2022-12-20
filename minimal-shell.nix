@@ -44,6 +44,8 @@ derivation ({
     unset builder name out shellHook stdenv system
     # Flakes stuff
     unset dontAddDisableDepTrack outputs
+    # don't need this to stick around, it gets added to PATH by this point
+    unset nativeBuildInputs
   '';
   nativeBuildInputs = shellPackages;
 } // passthru)
