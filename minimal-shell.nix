@@ -24,9 +24,9 @@ let
   };
   bashPath = "${args.pkgs.bashInteractive}/bin/bash";
 in
-(derivation ({
+derivation ({
   inherit stdenv;
-  system = pkgs.system;
+  inherit (pkgs) system;
   args = [ "-ec" "${args.pkgs.coreutils}/bin/ln -s ${profile} $out; exit 0" ];
   name = "lun-nixos-configs";
   builder = bashPath;
@@ -46,4 +46,4 @@ in
     unset dontAddDisableDepTrack outputs
   '';
   nativeBuildInputs = shellPackages;
-} // passthru))
+} // passthru)
