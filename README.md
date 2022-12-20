@@ -6,7 +6,7 @@ This is useful if you want to use a devShell in your flake with direnv and don't
 
 ```
 $ direnv reload
-direnv: export +nativeBuildInputs ~PATH ~XDG_DATA_DIRS
+direnv: export ~PATH ~XDG_DATA_DIRS
 ```
 
 ## Usage
