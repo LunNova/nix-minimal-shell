@@ -23,6 +23,13 @@ let
     paths = [ ];
   };
   bashPath = "${args.pkgs.bashInteractive}/bin/bash";
+  getOutput = output: pkg:
+    if ! pkg ? outputSpecified || ! pkg.outputSpecified
+    then pkg.${output} or pkg.out or pkg
+    else pkg;
+  makeSearchPath = subDir: paths: builtins.concatStringsSep ":" (map (path: path + "/" + subDir) (builtins.filter (x: x != null) paths));
+  makeSearchPathOutput = output: subDir: pkgs: makeSearchPath subDir (map (getOutput output) pkgs);
+  makeBinPath = makeSearchPathOutput "bin" "bin";
 in
 derivation ({
   inherit stdenv;
@@ -44,8 +51,7 @@ derivation ({
     unset builder name out shellHook stdenv system
     # Flakes stuff
     unset dontAddDisableDepTrack outputs
-    # don't need this to stick around, it gets added to PATH by this point
-    unset nativeBuildInputs
-  '';
-  nativeBuildInputs = shellPackages;
+  '' + (if (shellPackages != [ ]) then ''
+    export PATH="${makeBinPath shellPackages}:$PATH"
+  '' else "");
 } // passthru)
