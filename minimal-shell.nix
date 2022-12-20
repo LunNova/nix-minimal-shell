@@ -1,4 +1,10 @@
-{ pkgs, shellHooks ? "", system ? pkgs.system ? builtins.currentSystem, passthru ? { }, ... }@args:
+{ pkgs
+, shellHooks ? ""
+, system ? pkgs.system ? builtins.currentSystem
+, passthru ? { }
+, shellPackages ? [ ]
+, ...
+}@args:
 let
   stdenv = pkgs.writeTextFile {
     name = "naked-stdenv";
@@ -39,4 +45,5 @@ in
     # Flakes stuff
     unset dontAddDisableDepTrack outputs
   '';
+  nativeBuildInputs = shellPackages;
 } // passthru))
